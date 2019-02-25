@@ -3,18 +3,12 @@
     "bignumber.js": "^5.0.0",
     "bn-plus.js": "^1.0.0",
     "extend": "^3.0.0",
-    "isomorphic-ws": "^4.0.1",
     "jsbn": "^1.1.0",
-    "lodash": "^4.17.2",
-    "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
-    "swtc-factory": "^1.1.0",
-    "url": "^0.11.0",
-    "utf8": "^2.1.2",
-    "ws": "^1.1.1"
+    "swtc-factory": "^1.1.0"
   },
   "deprecated": false,
-  "description": "jingtum lib",
+  "description": "swtc serializer for tx",
   "devDependencies": {
     "ajv": "^6.5.3",
     "babel-cli": "^6.26.0",
@@ -35,36 +29,34 @@
     "gulp-eslint": "^5.0.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "sinon": "^6.3.4"
+    "sinon": "^7.2.4"
   },
   "directories": {
     "lib": "lib"
   },
   "keywords": [
-    "jingtum",
-    "blockchain",
-    "lib"
+    "serializer",
+    "swtc",
+    "jingtum"
   ],
   "license": "Apache-2.0",
   "main": "index.js",
-  "name": "jcc_jingtum_lib",
+  "name": "swtc-serializer",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JCCDex/jcc_jingtum_lib.git"
+    "url": "git+https://github.com/swtcca/jcc_jingtum_lib.git"
   },
   "scripts": {
-    "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
-    "deploy": "./publish.sh",
+    "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.4.8",
-  "author": "JCCDex",
+  "version": "1.0.0",
+  "author": "Lospring Liu",
   "bugs": {
-    "url": "https://github.com/JCCDex/jcc_jingtum_lib/issues"
+    "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
   },
-  "homepage": "https://github.com/JCCDex/jcc_jingtum_lib#readme",
+  "homepage": "https://github.com/swtcca/jcc_jingtum_lib#readme",
   "files": [
-    "src",
     "lib"
   ]
 }
