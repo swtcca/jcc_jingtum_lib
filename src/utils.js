@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/11/20.
  */
 var extend = require('extend');
-var Wallet = require('jcc_jingtum_base_lib').Wallet;
+var Wallet = require('swtc-factory').Wallet;
 var _extend = require('lodash/extend');
 var _isEmpty = require('lodash/isEmpty');
 var utf8 = require('utf8');

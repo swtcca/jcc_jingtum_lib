@@ -3,7 +3,7 @@ var util = require('util');
 var Event = require('events').EventEmitter;
 var utf8 = require('utf8');
 var utils = require('./utils');
-var Wallet = require('jcc_jingtum_base_lib').Wallet;
+var Wallet = require('swtc-factory').Wallet;
 var sign = require('./local_sign');
 /**
  * Post request to server with account secret
