@@ -1,5 +1,5 @@
 var Wallet = require('swtc-factory').Wallet;
-var jser = require('../lib/Serializer').Serializer;
+var jser = require('swtc-serializer').Serializer;
 
 function jingtum_sign_tx(in_tx, in_v, token) {
     token = token || 'swt';

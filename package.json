@@ -9,6 +9,7 @@
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
     "swtc-factory": "^1.1.0",
+    "swtc-serializer": "^1.1.0",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
@@ -54,7 +55,6 @@
   },
   "scripts": {
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
-    "deploy": "./publish.sh",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "version": "1.4.8",
