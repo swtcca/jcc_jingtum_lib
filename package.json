@@ -8,25 +8,11 @@
     "swtc-factory": "^1.1.0"
   },
   "deprecated": false,
-  "description": "swtc serializer for tx",
+  "description": "swtc-serializer@jcc",
   "devDependencies": {
-    "ajv": "^6.5.3",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.6",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "chai-json-schema": "^1.5.0",
     "coveralls": "^3.0.2",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-eslint": "^5.0.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "sinon": "^7.2.4"
@@ -50,7 +36,7 @@
     "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Lospring Liu",
   "bugs": {
     "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
