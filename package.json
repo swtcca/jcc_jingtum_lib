@@ -9,13 +9,13 @@
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
     "swtc-factory": "^1.1.0",
-    "swtc-serializer": "^1.1.0",
+    "swtc-serializer": "^1.1.2",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
   },
   "deprecated": false,
-  "description": "jingtum lib",
+  "description": "swtc-lib@jcc",
   "devDependencies": {
     "ajv": "^6.5.3",
     "babel-cli": "^6.26.0",
@@ -42,27 +42,27 @@
     "lib": "lib"
   },
   "keywords": [
+    "swtc",
     "jingtum",
-    "blockchain",
-    "lib"
+    "jcc"
   ],
   "license": "Apache-2.0",
   "main": "index.js",
-  "name": "jcc_jingtum_lib",
+  "name": "swtc-lib",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JCCDex/jcc_jingtum_lib.git"
+    "url": "git+https://github.com/swtcca/jcc_jingtum_lib.git"
   },
   "scripts": {
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.4.8",
+  "version": "1.5.0",
   "author": "JCCDex",
   "bugs": {
-    "url": "https://github.com/JCCDex/jcc_jingtum_lib/issues"
+    "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
   },
-  "homepage": "https://github.com/JCCDex/jcc_jingtum_lib#readme",
+  "homepage": "https://github.com/swtcca/jcc_jingtum_lib#readme",
   "files": [
     "src",
     "lib"
