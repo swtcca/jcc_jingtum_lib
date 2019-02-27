@@ -26,7 +26,7 @@
     "jingtum"
   ],
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "lib/Serializer.js",
   "name": "swtc-serializer",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.1.0",
+  "version": "1.1.2",
   "author": "Lospring Liu",
   "bugs": {
     "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
