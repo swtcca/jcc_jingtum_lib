@@ -9,7 +9,7 @@
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
     "swtc-factory": "^1.1.0",
-    "swtc-serializer": "^1.1.2",
+    "swtc-serializer": "^2.0.0",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
