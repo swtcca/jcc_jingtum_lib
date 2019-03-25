@@ -57,7 +57,7 @@
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.0",
+  "version": "1.5.2",
   "author": "JCCDex",
   "bugs": {
     "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
