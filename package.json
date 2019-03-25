@@ -36,7 +36,7 @@
     "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Lospring Liu",
   "bugs": {
     "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
