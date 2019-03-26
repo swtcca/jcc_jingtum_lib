@@ -8,8 +8,8 @@
     "lodash": "^4.17.2",
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
-    "swtc-factory": "^1.1.0",
-    "swtc-serializer": "^2.0.0",
+    "swtc-factory": "^1.1.7",
+    "swtc-serializer": "^2.0.3",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
@@ -25,7 +25,7 @@
     "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "chai-json-schema": "^1.5.0",
-    "coveralls": "^3.0.2",
+    "coveralls": "^3.0.3",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
@@ -51,18 +51,18 @@
   "name": "swtc-lib",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swtcca/jcc_jingtum_lib.git"
+    "url": "git+https://github.com/swtcca/swtc-serializer.git"
   },
   "scripts": {
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "JCCDex",
   "bugs": {
-    "url": "https://github.com/swtcca/jcc_jingtum_lib/issues"
+    "url": "https://github.com/swtcca/swtc-serializer/issues"
   },
-  "homepage": "https://github.com/swtcca/jcc_jingtum_lib#readme",
+  "homepage": "https://github.com/swtcca/swtc-serializer#readme",
   "files": [
     "src",
     "lib"
