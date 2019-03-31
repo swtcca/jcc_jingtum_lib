@@ -8,8 +8,8 @@
     "lodash": "^4.17.2",
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
-    "swtc-factory": "^1.1.7",
-    "swtc-serializer": "^2.0.3",
+    "swtc-factory": "^1.1.8",
+    "swtc-serializer": "^2.0.4",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
