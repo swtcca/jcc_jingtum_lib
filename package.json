@@ -9,7 +9,7 @@
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
     "swtc-factory": "^1.1.9",
-    "swtc-serializer": "^2.0.5",
+    "swtc-serializer": "^2.0.6",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
@@ -57,7 +57,7 @@
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.4",
+  "version": "1.5.5",
   "author": "JCCDex",
   "bugs": {
     "url": "https://github.com/swtcca/swtc-serializer/issues"
