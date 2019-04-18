@@ -5,7 +5,8 @@
     "extend": "^3.0.0",
     "jsbn": "^1.1.0",
     "sha1": "^1.1.1",
-    "swtc-factory": "^1.1.10"
+    "swtc-factory": "^1.1.13",
+    "swtc-utils": "^1.0.1"
   },
   "deprecated": false,
   "description": "swtc-serializer@jcc",
@@ -53,7 +54,7 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test:nyc": "nyc --reporter=html --reporter=text mocha test/test*.js"
   },
-  "version": "2.0.6",
+  "version": "2.0.8",
   "author": "Lospring Liu",
   "bugs": {
     "url": "https://github.com/swtcca/swtc-serializer/issues"
