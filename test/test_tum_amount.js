@@ -1,6 +1,8 @@
 const chai = require("chai")
 const expect = chai.expect
 const Amount = require("../lib/TumAmount").Factory()
+const FactoryAmount = require("../lib/TumAmount").Factory
+const FactoryWallet = require("swtc-wallet").Factory
 const BN = require("bn-plus.js")
 const testData = {
   value: "1",
@@ -9,13 +11,13 @@ const testData = {
 }
 describe("test TumAmount", function() {
   describe("test constructor", function() {
-    it("if the token is undefined", function() {
-      let inst = new Amount()
-      expect(inst._token).to.equal("swt")
+    it("if the token is undefined , not needed", function() {
+      // let inst = new Amount()
+      expect(Amount.Wallet.token).to.equal("SWT")
     })
-    it("if the token is bwt", function() {
-      let inst = new Amount("bwt")
-      expect(inst._token).to.equal("bwt")
+    it("if the token is bwt, not needed", function() {
+      let AmountBwt = FactoryAmount(FactoryWallet("bizain"))
+      expect(AmountBwt.Wallet.token).to.equal("BWT")
     })
   })
 
