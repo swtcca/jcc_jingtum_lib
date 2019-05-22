@@ -8,8 +8,7 @@
     "lodash": "^4.17.2",
     "lru-cache": "^4.0.1",
     "sha1": "^1.1.1",
-    "swtc-factory": "^1.1.9",
-    "swtc-serializer": "^2.0.6",
+    "swtc-serializer": "1.1.3",
     "url": "^0.11.0",
     "utf8": "^2.1.2",
     "ws": "^1.1.1"
@@ -35,7 +34,7 @@
     "gulp-babel": "^7.0.1",
     "gulp-eslint": "^5.0.0",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^14.1.1",
     "sinon": "^6.3.4"
   },
   "directories": {
@@ -57,7 +56,7 @@
     "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.5",
+  "version": "1.5.7",
   "author": "JCCDex",
   "bugs": {
     "url": "https://github.com/swtcca/swtc-serializer/issues"
