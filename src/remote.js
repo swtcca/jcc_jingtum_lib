@@ -44,7 +44,7 @@ function Remote(options) {
     };
     self._requests = {};
     self._token = options.token || Wallet.getCurrency() || 'swt'
-    self._issuer = options.issuer || Wallet.getIssuer(self._token) || 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or'
+    self._issuer = options.issuer || Wallet.getIssuer(Wallet.getCurrency()) || 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or'
 
     self._cache = LRU({
         max: 100,
@@ -89,13 +89,9 @@ Remote.prototype.connect = function (callback) {
 };
 
 Remote.prototype.connectPromise = async function () {
-  return new Promise((resolve, reject) => {
-    if (!this._server) reject(new Error("server not ready"))
-    this._server
-      .connectPromise()
-      .then(result => resolve(result))
-      .catch(error => reject(error))
-  })
+  var self = this
+  if (!self._server) return Promise.reject(new Error("server not ready"))
+  return self._server.connectPromise()
 }
 
 /**

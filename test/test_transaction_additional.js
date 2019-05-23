@@ -67,9 +67,8 @@ describe("test transaction additions", function() {
       tx.sign(callback)
     })
     it("sign and submit", async function() {
-	  console.log(tx)
+      await remote.connectPromise()
       let result = await tx.submitPromise()
-	  console.log(tx)
       console.log(result.data)
       expect(result).to.be.an("object")
     })
@@ -293,22 +292,23 @@ describe("test transaction additions", function() {
         {
           source: DATA.address,
           to: DATA.address2,
-          amount: { value: 1.9999099, currency: "SWT", issuer: "" }
+          amount: remote.makeAmount(1.9999099)
         }
       )
       tx.setSecret(DATA.secret)
       let result = await tx.submitPromise()
+	  await sleep(12000)
       expect(tx.tx_json).to.have.property("Sequence")
       expect(tx.tx_json.Sequence).to.be.a("number")
       expect(tx.tx_json).to.have.property("blob")
-      expect(result).to.have.property("data")
-      expect(result.data).to.have.property("success")
-      expect(result.data.success).to.be.true
-      expect(result.data).to.have.property("tx_blob")
-      expect(tx.tx_json.blob).to.be.equal(result.data.tx_blob)
+      expect(result).to.have.property("engine_result")
+      expect(result.engine_result).to.be.equal('tesSUCCESS')
+      expect(result).to.have.property("tx_blob")
+      expect(tx.tx_json.blob).to.be.equal(result.tx_blob)
+	  
     })
     it(".submitPromise() with secret param", async function() {
-      let tx = TX.buildPaymentTx(
+      let tx = remote.buildPaymentTx(
         {
           source: DATA.address,
           to: DATA.address2,
@@ -316,14 +316,14 @@ describe("test transaction additions", function() {
         }
       )
       let result = await tx.submitPromise(DATA.secret)
+	  await sleep(12000)
       expect(tx.tx_json).to.have.property("Sequence")
       expect(tx.tx_json.Sequence).to.be.a("number")
       expect(tx.tx_json).to.have.property("blob")
-      expect(result).to.have.property("data")
-      expect(result.data).to.have.property("success")
-      expect(result.data.success).to.be.true
-      expect(result.data).to.have.property("tx_blob")
-      expect(tx.tx_json.blob).to.be.equal(result.data.tx_blob)
+      expect(result).to.have.property("engine_result")
+      expect(result.engine_result).to.be.equal('tesSUCCESS')
+      expect(result).to.have.property("tx_blob")
+      expect(tx.tx_json.blob).to.be.equal(result.tx_blob)
     })
     it(".submitPromise() with secret and memo param", async function() {
       let tx = remote.buildPaymentTx(
@@ -334,20 +334,19 @@ describe("test transaction additions", function() {
         }
       )
       let result = await tx.submitPromise(DATA.secret, "hello memo")
+	  await sleep(12000)
       expect(tx.tx_json).to.have.property("Memos")
       expect(tx.tx_json.Memos).to.be.a("array")
       expect(tx.tx_json).to.have.property("Sequence")
       expect(tx.tx_json.Sequence).to.be.a("number")
       expect(tx.tx_json).to.have.property("blob")
-      expect(result).to.have.property("data")
-      expect(result.data).to.have.property("success")
-      expect(result.data.success).to.be.true
-      expect(result.data).to.have.property("engine_result")
-      expect(result.data).to.have.property("tx_blob")
-      expect(tx.tx_json.blob).to.be.equal(result.data.tx_blob)
+      expect(result).to.have.property("engine_result")
+      expect(result.engine_result).to.be.equal('tesSUCCESS')
+      expect(result).to.have.property("tx_blob")
+      expect(tx.tx_json.blob).to.be.equal(result.tx_blob)
     })
     it(".submitPromise() with secret and sequence param", async function() {
-      let tx = TX.buildPaymentTx(
+      let tx = remote.buildPaymentTx(
         {
           source: DATA.address,
           to: DATA.address2,
@@ -355,17 +354,15 @@ describe("test transaction additions", function() {
         }
       )
       let result = await tx.submitPromise(DATA.secret, "", 10)
+	  remote.disconnect()
       expect(tx.tx_json).to.have.property("Sequence")
       expect(tx.tx_json.Sequence).to.be.a("number")
       expect(tx.tx_json.Sequence).to.be.equal(10)
       expect(tx.tx_json).to.have.property("blob")
-      expect(result).to.have.property("data")
-      expect(result.data).to.have.property("success")
-      expect(result.data.success).to.be.true
-      expect(result.data).to.have.property("engine_result")
-      expect(result.data.engine_result).to.be.equal("tefPAST_SEQ")
-      expect(result.data).to.have.property("tx_blob")
-      expect(tx.tx_json.blob).to.be.equal(result.data.tx_blob)
+      expect(result).to.have.property("engine_result")
+      expect(result.engine_result).to.be.equal("tefPAST_SEQ")
+      expect(result).to.have.property("tx_blob")
+      expect(tx.tx_json.blob).to.be.equal(result.tx_blob)
     })
   })
 })

@@ -57,7 +57,7 @@
     "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.8",
+  "version": "1.5.9",
   "author": "JCCDex",
   "bugs": {
     "url": "https://github.com/swtcca/swtc-serializer/issues"
