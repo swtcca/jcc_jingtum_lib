@@ -12,6 +12,7 @@ var OrderBook = require('./orderbook');
 var utils = require('./utils');
 var _isNumber = require('lodash/isNumber');
 var Bignumber = require('bignumber.js');
+const Wallet = require('swtc-factory').Wallet
 
 /**
  * main handler for backend system
@@ -42,7 +43,8 @@ function Remote(options) {
         ledger_index: 0
     };
     self._requests = {};
-    self._token = options.token || 'swt'
+    self._token = options.token || Wallet.getCurrency() || 'swt'
+    self._issuer = options.issuer || Wallet.getIssuer(self._token) || 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or'
 
     self._cache = LRU({
         max: 100,
@@ -85,6 +87,16 @@ Remote.prototype.connect = function (callback) {
     if (!this._server) return callback('server not ready');
     this._server.connect(callback);
 };
+
+Remote.prototype.connectPromise = async function () {
+  return new Promise((resolve, reject) => {
+    if (!this._server) reject(new Error("server not ready"))
+    this._server
+      .connectPromise()
+      .then(result => resolve(result))
+      .catch(error => reject(error))
+  })
+}
 
 /**
  * disconnect manual, no reconnect
@@ -1294,5 +1306,14 @@ Remote.prototype.createAccountStub = function () {
 Remote.prototype.createOrderBookStub = function () {
     return new OrderBook(this);
 };
+
+
+// makeCurrency and makeAmount
+Remote.prototype.makeCurrency = function (currency = this._token, issuer = this._issuer, token = this._token) {
+  return Wallet.makeCurrency(currency, issuer, token)
+}
+Remote.prototype.makeAmount = function (value = 1, currency = this._token, issuer = this._issuer, token = this._token) {
+  return Wallet.makeAmount(value, currency, issuer, token)
+}
 
 module.exports = Remote;

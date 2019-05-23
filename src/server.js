@@ -91,6 +91,39 @@ Server.prototype.connect = function (callback) {
     };
 };
 
+Server.prototype.connectPromise = async function () {
+    var self = this;
+    return new Promise((resolve, reject) => {
+        if (self._connected) resolve({message: "already connected"})
+        if (self._ws) self._ws.close();
+
+        try {
+            self._ws = new WS(self._url);
+        } catch (e) {
+            reject(e);
+        }
+
+        self._ws.onopen, () => {
+            self._opened = true
+            const req = self._remote.subscribe(["ledger", "server", "transactions"])
+            req
+                .submitPromise()
+                .then(result => resolve(result))
+                .catch(error => reject(error))
+        };
+        self._ws.onclose = function close() {
+            self._handleClose();
+        };
+        self._ws.onerror = function error(err) {
+            reject(err);
+        };
+
+        self._ws.onmessage = function message(e) {
+            self._remote._handleMessage(e);
+        };
+    })
+}
+
 /**
  * close manual, not close connection until new connection
  */

@@ -1,10 +1,12 @@
 'use strict';
+const axios = require('axios')
 var util = require('util');
 var Event = require('events').EventEmitter;
 var utf8 = require('utf8');
 var utils = require('./utils');
 var Wallet = require('swtc-factory').Wallet;
 var sign = require('./local_sign');
+const jser = require("swtc-serializer").Serializer
 /**
  * Post request to server with account secret
  * @param remote
@@ -323,6 +325,55 @@ Transaction.prototype.sign = function (callback) {
     }
 };
 
+Transaction.prototype.signPromise = async function(secret = "", memo = "", sequence = 0) {
+    var self = this;
+    if (!self.tx_json) {
+        return Promise.reject("a valid transaction is expected")
+    } else if ("blob" in self.tx_json) {
+        return Promise.resolve(self.tx_json.blob)
+    } else {
+        for (const key in self.tx_json) {
+            if (self.tx_json[key] instanceof Error) {
+                return Promise.reject(self.tx_json[key].message)
+            }
+        }
+        try {
+            if (memo) {
+                self.addMemo(memo)
+            }
+            if (sequence) {
+                self.setSequence(sequence)
+            }
+        } catch (error) {
+            return Promise.reject(error)
+        }
+        if (!self._secret) {
+            if (!secret) {
+                return Promise.reject("a valid secret is needed to sign with")
+            } else {
+                self._secret = secret
+            }
+        } // has _secret now
+        if (!self.tx_json.Sequence) {
+            try {
+                await self._setSequencePromise()
+                await self._signPromise()
+                return Promise.resolve(self.tx_json.blob)
+            } catch (error) {
+                return Promise.reject(error)
+            }
+            // has tx_json.Sequence now
+        } else {
+            try {
+                await self._signPromise()
+                return Promise.resolve(self.tx_json.blob)
+            } catch (error) {
+                return Promise.reject(error)
+            }
+        }
+    }
+}
+
 /**
  * submit request to server
  * @param callback
@@ -360,5 +411,138 @@ Transaction.prototype.submit = function (callback) {
         self._remote._submit('submit', data, self._filter, callback);
     }
 };
+
+Transaction.prototype.submitPromise = async function (secret = "", memo = "", sequence = 0) {
+    const self = this
+    for (const key in self.tx_json) {
+        if (self.tx_json[key] instanceof Error) {
+            return Promise.reject(self.tx_json[key].message)
+        }
+    }
+    try {
+        const blob = await self.signPromise(secret, memo, sequence)
+        const data = { blob }
+        if ("_submit" in self._remote) {
+            // lib remote
+            return new Promise((resolve, reject) => {
+                const callback = (error, result) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(result)
+                    }
+                }
+                self._remote._submit(
+                    "submit",
+                    { tx_blob: blob },
+                    self._filter,
+                    callback
+                )
+            })
+        } else if ("txSubmitPromise" in self._remote) {
+            // api remote
+            return self._remote.txSubmitPromise(self)
+        } else if ("_axios" in self._remote) {
+            // api remote
+            return self._remote._axios.post(`blob`, data)
+        } else {
+            // use api.jingtum.com directly
+            return axios.post(`https://api.jingtum.com/v2/blob`, data)
+        }
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+Transaction.prototype._signPromise = async function () {
+    var self = this;
+    self.tx_json.Fee = self.tx_json.Fee / 1000000
+    // payment
+    if (
+        self.tx_json.Amount &&
+        JSON.stringify(self.tx_json.Amount).indexOf("{") < 0
+    ) {
+        // 基础货币
+        self.tx_json.Amount = Number(self.tx_json.Amount) / 1000000
+    }
+    if (self.tx_json.Memos) {
+        const memos = self.tx_json.Memos
+        for (const memo of memos) {
+            memo.Memo.MemoData = utf8.decode(
+                utils.hexToString(memo.Memo.MemoData)
+            )
+        }
+    }
+    if (self.tx_json.SendMax && typeof self.tx_json.SendMax === "string") {
+        self.tx_json.SendMax = Number(self.tx_json.SendMax) / 1000000
+    }
+    // order
+    if (
+        self.tx_json.TakerPays &&
+        JSON.stringify(self.tx_json.TakerPays).indexOf("{") < 0
+    ) {
+        // 基础货币
+        self.tx_json.TakerPays = Number(self.tx_json.TakerPays) / 1000000
+    }
+    if (
+        self.tx_json.TakerGets &&
+        JSON.stringify(self.tx_json.TakerGets).indexOf("{") < 0
+    ) {
+        // 基础货币
+        self.tx_json.TakerGets = Number(self.tx_json.TakerGets) / 1000000
+    }
+    return new Promise((resolve, reject) => {
+        try {
+            const wt = new Wallet(self._secret, self._token)
+            self.tx_json.SigningPubKey = wt.getPublicKey(self._token)
+            const prefix = 0x53545800
+            const hash = jser.from_json(self.tx_json, self._token).hash(prefix)
+            self.tx_json.TxnSignature = wt.signTx(hash, self._token)
+            self.tx_json.blob = jser.from_json(self.tx_json, self._token).to_hex()
+            resolve(self)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+Transaction.prototype._setSequencePromise = async function () {
+    var self = this
+    let data
+    let response
+    try {
+        if ("requestAccountInfo" in self._remote) {
+            data = await self._remote
+                .requestAccountInfo({
+                    account: self.tx_json.Account,
+                    type: "trust"
+                })
+                .submitPromise()
+            self.tx_json.Sequence = data.account_data.Sequence
+            return Promise.resolve(self)
+        } else if ("getAccountBalances" in self._remote) {
+            data = await self._remote.getAccountBalances(self.tx_json.Account)
+            self.tx_json.Sequence = data.sequence
+            return Promise.resolve(self)
+        } else if ("_axios" in self._remote) {
+            response = await self._remote._axios.get(
+                `accounts/${self.tx_json.Account}/balances`
+            )
+            self.tx_json.Sequence = response.data.sequence
+            return Promise.resolve(self)
+        } else {
+            // use api.jingtum.com to get sequence
+            response = await axios.get(
+                `https://api.jingtum.com/v2/accounts/${
+                    self.tx_json.Account
+                }/balances`
+            )
+            self.tx_json.Sequence = response.data.sequence
+            return Promise.resolve(self)
+        }
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 
 module.exports = Transaction;

@@ -22,6 +22,29 @@ function Request(remote, command, filter) {
 }
 util.inherits(Request, Event);
 
+Request.prototype.submitPromise = async function () {
+    var self = this;
+    return new Promise((resolve, reject) => {
+        for (const key in self.message) {
+            if (self.message[key] instanceof Error) {
+                reject(self.message[key].message)
+            }
+        }
+        self._remote._submit(
+            self._command,
+            self.message,
+            self._filter,
+            (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            }
+        )
+    })
+}
+
 Request.prototype.submit = function (callback) {
     var self = this;
     for (var key in self.message) {

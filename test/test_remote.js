@@ -22,11 +22,11 @@ describe('test remote', function () {
             expect(remote.type).to.be.an('error');
         })
 
-        it('the default _token is swt', function () {
+        it('the default _token is SWT', function () {
             let remote = new Remote({
                 server: JT_NODE
             });
-            expect(remote._token).to.be.equal('swt');
+            expect(remote._token).to.be.equal('SWT');
         })
 
         it('if the server is ws', function () {

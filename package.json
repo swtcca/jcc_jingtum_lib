@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.18.0",
     "bignumber.js": "^5.0.0",
     "bn-plus.js": "^1.0.0",
     "extend": "^3.0.0",
@@ -53,10 +54,10 @@
     "url": "git+https://github.com/swtcca/swtc-serializer.git"
   },
   "scripts": {
-    "test": "gulp && nyc --reporter=html --reporter=text mocha test/test_*.js",
+    "test": "nyc --reporter=html --reporter=text mocha test/test_*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
-  "version": "1.5.7",
+  "version": "1.5.8",
   "author": "JCCDex",
   "bugs": {
     "url": "https://github.com/swtcca/swtc-serializer/issues"
